@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GitHub.com: возможности и причины начать</title>
+    <style>
+      :root {
+        --bg: #0b1220;
+        --panel: rgba(255, 255, 255, 0.06);
+        --panel-strong: rgba(255, 255, 255, 0.1);
+        --text: #eaf0ff;
+        --muted: rgba(234, 240, 255, 0.75);
+        --accent: #7c5cff;
+        --accent2: #2ee9a6;
+        --border: rgba(255, 255, 255, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          "Noto Sans", "Liberation Sans", sans-serif;
+        background: radial-gradient(1200px 600px at 20% -10%, rgba(124, 92, 255, 0.35), transparent),
+          radial-gradient(900px 500px at 90% 10%, rgba(46, 233, 166, 0.22), transparent),
+          var(--bg);
+        color: var(--text);
+      }
+
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 28px 16px 48px;
+      }
+
+      header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .title-block h1 {
+        margin: 0 0 8px;
+        font-size: clamp(1.35rem, 3vw, 2rem);
+        letter-spacing: -0.02em;
+      }
+
+      .title-block p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .cta {
+        flex: 0 0 auto;
+        text-decoration: none;
+        border: 1px solid var(--border);
+        background: linear-gradient(135deg, rgba(124, 92, 255, 0.35), rgba(46, 233, 166, 0.18));
+        color: var(--text);
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-weight: 650;
+      }
+
+      .cta:hover {
+        border-color: rgba(255, 255, 255, 0.22);
+        transform: translateY(-1px);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 14px;
+      }
+
+      @media (min-width: 860px) {
+        .grid.two {
+          grid-template-columns: 1fr 1fr;
+        }
+        .grid.three {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 16px;
+      }
+
+      .card h2 {
+        margin: 0 0 10px;
+        font-size: 1.05rem;
+      }
+
+      .card p {
+        margin: 0 0 10px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      ol {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      li {
+        margin: 8px 0;
+        color: var(--text);
+      }
+
+      .pill {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--panel-strong);
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .caps {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      @media (min-width: 560px) {
+        .caps {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .cap {
+        padding: 12px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .cap strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .cap span {
+        color: var(--muted);
+        line-height: 1.35;
+      }
+
+      footer {
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.45;
+      }
+
+      a {
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="title-block">
+          <h1>GitHub.com: 5 причин начать учить сегодня</h1>
+          <p>
+            GitHub.com — это платформа для хостинга репозиториев, командной разработки и
+            автоматизации процессов. Ниже — понятная шпаргалка: причины, преимущества и
+            10 ключевых возможностей.
+          </p>
+        </div>
+        <a class="cta" href="https://github.com/" target="_blank" rel="noreferrer noopener">
+          Перейти на GitHub
+        </a>
+      </header>
+
+      <section class="grid two" aria-label="Причины и преимущества">
+        <article class="card">
+          <h2>5 причин начать учить GitHub сегодня</h2>
+          <ol>
+            <li>
+              Учишься работать в команде: коммиты, обсуждения и согласование изменений в
+              едином процессе.
+            </li>
+            <li>
+              Быстро оформляешь “портфолио”: публичные репозитории и аккуратные Pull Request
+              показывают твой уровень.
+            </li>
+            <li>
+              Осваиваешь контроль версий на практике: проще возвращаться к прошлым версиям и
+              понимать историю изменений.
+            </li>
+            <li>
+              Автоматизация через GitHub Actions: тесты, сборки, проверки качества и деплой
+              по расписанию или при PR.
+            </li>
+            <li>
+              Удобная работа с задачами: Issues и Projects помогают не терять контекст.
+            </li>
+          </ol>
+        </article>
+
+        <article class="card">
+          <h2>3 преимущества GitHub.com</h2>
+          <p>
+            Если коротко, GitHub помогает одновременно писать код, согласовывать изменения и
+            поддерживать проект в рабочем состоянии.
+          </p>
+          <div class="grid three">
+            <div class="pill">Сообщество и шаблоны</div>
+            <div class="pill">Коллаборация</div>
+            <div class="pill">Автоматизация</div>
+          </div>
+          <ol style="margin-top: 12px;">
+            <li>Много готовых практик и интеграций — быстро находишь “как правильно”.</li>
+            <li>Прозрачный код-ревью: легче обсуждать правки и снижать ошибки.</li>
+            <li>Гибкая автоматизация: от линтеров до CI/CD в один клик.</li>
+          </ol>
+        </article>
+      </section>
+
+      <section class="grid" style="margin-top: 14px;" aria-label="10 возможностей GitHub.com">
+        <article class="card">
+          <h2>10 возможностей GitHub.com</h2>
+          <div class="caps">
+            <div class="cap">
+              <strong>Репозитории</strong>
+              <span>Хранилище кода с историей изменений и доступами.</span>
+            </div>
+            <div class="cap">
+              <strong>Коммиты и ветки</strong>
+              <span>Организация работы параллельно и безопасные изменения.</span>
+            </div>
+            <div class="cap">
+              <strong>Pull Requests</strong>
+              <span>Обсуждение и согласование изменений перед мерджем.</span>
+            </div>
+            <div class="cap">
+              <strong>Code Review</strong>
+              <span>Комментарий к строкам, подсказки и проверка качества.</span>
+            </div>
+            <div class="cap">
+              <strong>Issues</strong>
+              <span>Задачи, баги и трекинг работы команды.</span>
+            </div>
+            <div class="cap">
+              <strong>Actions (CI/CD)</strong>
+              <span>Автоматические тесты, сборки и деплой при событиях.</span>
+            </div>
+            <div class="cap">
+              <strong>GitHub Pages</strong>
+              <span>Публикация статических сайтов из репозитория.</span>
+            </div>
+            <div class="cap">
+              <strong>Projects</strong>
+              <span>Канбан-доски и планирование работ поверх Issues.</span>
+            </div>
+            <div class="cap">
+              <strong>Discussions</strong>
+              <span>Открытое обсуждение идей, вопросов и решений.</span>
+            </div>
+            <div class="cap">
+              <strong>Безопасность</strong>
+              <span>Подсказки по уязвимостям, зависимостям и правам.</span>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <footer>
+        Хочешь — сделаю продолжение: “первый репозиторий за 15 минут” с пошаговой
+        инструкцией и мини-чеклистом (что сделать в браузере и через `git`).
+      </footer>
+    </div>
+  </body>
+</html>
+
