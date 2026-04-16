@@ -7,13 +7,42 @@
     <style>
       :root {
         --bg: #0b1220;
-        --panel: rgba(255, 255, 255, 0.06);
-        --panel-strong: rgba(255, 255, 255, 0.1);
+        --panel: rgba(255, 255, 255, 0.12);
+        --panel-strong: rgba(255, 255, 255, 0.2);
+        --cap-bg: rgba(255, 255, 255, 0.13);
         --text: #eaf0ff;
-        --muted: rgba(234, 240, 255, 0.75);
+        --muted: #d9e1ff;
         --accent: #7c5cff;
+        --accentRgb: 124 92 255;
         --accent2: #2ee9a6;
-        --border: rgba(255, 255, 255, 0.12);
+        --accent2Rgb: 46 233 166;
+        --border: rgba(255, 255, 255, 0.26);
+        --theme-btn-bg: rgba(255, 255, 255, 0.15);
+        --theme-btn-bg-hover: rgba(255, 255, 255, 0.2);
+        --grad1Alpha: 0.18;
+        --grad2Alpha: 0.12;
+      }
+
+      html[data-theme="light"] {
+        --bg: #ffffff;
+        --text: #0b1220;
+        --muted: #24354f;
+
+        --panel: rgba(10, 20, 40, 0.07);
+        --panel-strong: rgba(10, 20, 40, 0.09);
+        --cap-bg: rgba(10, 20, 40, 0.06);
+
+        --accent: #5b5cff;
+        --accentRgb: 91 92 255;
+        --accent2: #18c58b;
+        --accent2Rgb: 24 197 139;
+
+        --border: rgba(10, 20, 40, 0.18);
+        --theme-btn-bg: rgba(10, 20, 40, 0.06);
+        --theme-btn-bg-hover: rgba(10, 20, 40, 0.1);
+
+        --grad1Alpha: 0.08;
+        --grad2Alpha: 0.06;
       }
 
       * {
@@ -24,10 +53,19 @@
         margin: 0;
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
           "Noto Sans", "Liberation Sans", sans-serif;
-        background: radial-gradient(1200px 600px at 20% -10%, rgba(124, 92, 255, 0.35), transparent),
-          radial-gradient(900px 500px at 90% 10%, rgba(46, 233, 166, 0.22), transparent),
+        background: radial-gradient(
+            1200px 600px at 20% -10%,
+            rgba(var(--accentRgb), var(--grad1Alpha)),
+            transparent
+          ),
+          radial-gradient(
+            900px 500px at 90% 10%,
+            rgba(var(--accent2Rgb), var(--grad2Alpha)),
+            transparent
+          ),
           var(--bg);
         color: var(--text);
+        transition: background 220ms ease, color 220ms ease;
       }
 
       .wrap {
@@ -60,11 +98,39 @@
         flex: 0 0 auto;
         text-decoration: none;
         border: 1px solid var(--border);
-        background: linear-gradient(135deg, rgba(124, 92, 255, 0.35), rgba(46, 233, 166, 0.18));
+        background: linear-gradient(
+          135deg,
+          rgba(var(--accentRgb), 0.35),
+          rgba(var(--accent2Rgb), 0.18)
+        );
         color: var(--text);
         padding: 10px 14px;
         border-radius: 12px;
         font-weight: 650;
+      }
+
+      /* Верхний правый угол: кнопка смены темы + ссылка */
+      .right-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+        flex: 0 0 auto;
+      }
+
+      .theme-btn {
+        border: 1px solid var(--border);
+        background: var(--theme-btn-bg);
+        color: var(--text);
+        padding: 8px 12px;
+        border-radius: 12px;
+        font-weight: 650;
+        cursor: pointer;
+      }
+
+      .theme-btn:hover {
+        background: var(--theme-btn-bg-hover);
+        transform: translateY(-1px);
       }
 
       .cta:hover {
@@ -93,6 +159,7 @@
         border: 1px solid var(--border);
         border-radius: 16px;
         padding: 16px;
+        transition: background 220ms ease, border-color 220ms ease;
       }
 
       .card h2 {
@@ -143,7 +210,8 @@
         padding: 12px;
         border-radius: 14px;
         border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.04);
+        background: var(--cap-bg);
+        transition: background 220ms ease, border-color 220ms ease;
       }
 
       .cap strong {
@@ -179,9 +247,14 @@
             10 ключевых возможностей.
           </p>
         </div>
-        <a class="cta" href="https://github.com/" target="_blank" rel="noreferrer noopener">
-          Перейти на GitHub
-        </a>
+        <div class="right-controls">
+          <button id="themeToggle" class="theme-btn" type="button" aria-label="Сменить цветовую схему">
+            Светлая
+          </button>
+          <a class="cta" href="https://github.com/" target="_blank" rel="noreferrer noopener">
+            Перейти на GitHub
+          </a>
+        </div>
       </header>
 
       <section class="grid two" aria-label="Причины и преимущества">
@@ -282,6 +355,31 @@
         инструкцией и мини-чеклистом (что сделать в браузере и через `git`).
       </footer>
     </div>
+
+    <script>
+      (function () {
+        const btn = document.getElementById("themeToggle");
+        if (!btn) return;
+
+        const storageKey = "github_theme_mode"; // "light" | "dark"
+
+        function setMode(mode) {
+          const isLight = mode === "light";
+          document.documentElement.dataset.theme = isLight ? "light" : "";
+          btn.textContent = isLight ? "Тёмная" : "Светлая";
+        }
+
+        const saved = localStorage.getItem(storageKey);
+        setMode(saved === "light" ? "light" : "dark");
+
+        btn.addEventListener("click", function () {
+          const currentlyLight = document.documentElement.dataset.theme === "light";
+          const next = currentlyLight ? "dark" : "light";
+          localStorage.setItem(storageKey, next);
+          setMode(next);
+        });
+      })();
+    </script>
   </body>
 </html>
 
