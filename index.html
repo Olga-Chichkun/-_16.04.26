@@ -4,6 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>GitHub.com: возможности и причины начать</title>
+    <script>
+      (function () {
+        const storageKey = "github_theme_mode";
+        const savedTheme = localStorage.getItem(storageKey);
+        const hasValidSavedTheme = savedTheme === "light" || savedTheme === "dark";
+        const prefersLight =
+          typeof window.matchMedia === "function" &&
+          window.matchMedia("(prefers-color-scheme: light)").matches;
+
+        const initialTheme = hasValidSavedTheme ? savedTheme : prefersLight ? "light" : "dark";
+        document.documentElement.dataset.theme = initialTheme;
+      })();
+    </script>
     <style>
       :root {
         --bg: #0b1220;
@@ -396,16 +409,15 @@
 
           document.documentElement.dataset.theme = nextMode;
           btn.textContent = isLight ? "Светлая тема" : "Тёмная тема";
+          localStorage.setItem(storageKey, nextMode);
         }
 
-        const saved = localStorage.getItem(storageKey);
-        const initialMode = saved === THEMES.LIGHT || saved === THEMES.DARK ? saved : THEMES.DARK;
-        setMode(initialMode);
+        const currentTheme = document.documentElement.dataset.theme;
+        setMode(currentTheme);
 
         btn.addEventListener("click", function () {
           const currentlyLight = document.documentElement.dataset.theme === THEMES.LIGHT;
           const next = currentlyLight ? THEMES.DARK : THEMES.LIGHT;
-          localStorage.setItem(storageKey, next);
           setMode(next);
         });
       })();
