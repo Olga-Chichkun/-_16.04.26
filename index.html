@@ -384,20 +384,27 @@
         const btn = document.getElementById("themeToggle");
         if (!btn) return;
 
-        const storageKey = "github_theme_mode"; // "light" | "dark"
+        const storageKey = "github_theme_mode";
+        const THEMES = {
+          LIGHT: "light",
+          DARK: "dark",
+        };
 
         function setMode(mode) {
-          const isLight = mode === "light";
-          document.documentElement.dataset.theme = isLight ? "light" : "dark";
-          btn.textContent = isLight ? "Тёмная" : "Светлая";
+          const nextMode = mode === THEMES.LIGHT ? THEMES.LIGHT : THEMES.DARK;
+          const isLight = nextMode === THEMES.LIGHT;
+
+          document.documentElement.dataset.theme = nextMode;
+          btn.textContent = isLight ? "Светлая тема" : "Тёмная тема";
         }
 
         const saved = localStorage.getItem(storageKey);
-        setMode(saved === "light" ? "light" : "dark");
+        const initialMode = saved === THEMES.LIGHT || saved === THEMES.DARK ? saved : THEMES.DARK;
+        setMode(initialMode);
 
         btn.addEventListener("click", function () {
-          const currentlyLight = document.documentElement.dataset.theme === "light";
-          const next = currentlyLight ? "dark" : "light";
+          const currentlyLight = document.documentElement.dataset.theme === THEMES.LIGHT;
+          const next = currentlyLight ? THEMES.DARK : THEMES.LIGHT;
           localStorage.setItem(storageKey, next);
           setMode(next);
         });
