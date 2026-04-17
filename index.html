@@ -21,54 +21,51 @@
         --theme-btn-bg-hover: rgba(255, 255, 255, 0.2);
         --grad1Alpha: 0.18;
         --grad2Alpha: 0.12;
-
-        /* Light theme base colors (вынесены в :root) */
-        --bg-light: #ffffff;
-        --text-light: #0b1220;
-        --muted-light: #24354f;
-
-        --panel-light: rgba(10, 20, 40, 0.07);
-        --panel-strong-light: rgba(10, 20, 40, 0.09);
-        --cap-bg-light: rgba(10, 20, 40, 0.06);
-
-        --accent-light: #5b5cff;
-        --accentRgb-light: 91 92 255;
-        --accent2-light: #18c58b;
-        --accent2Rgb-light: 24 197 139;
-
-        --border-light: rgba(10, 20, 40, 0.18);
-        --theme-btn-bg-light: rgba(10, 20, 40, 0.06);
-        --theme-btn-bg-hover-light: rgba(10, 20, 40, 0.1);
-
-        --grad1Alpha-light: 0.08;
-        --grad2Alpha-light: 0.06;
-
+        --cta-grad1-alpha: 0.35;
+        --cta-grad2-alpha: 0.18;
         --cta-hover-border-color: rgba(255, 255, 255, 0.22);
-        --cta-hover-border-color-light: rgba(10, 20, 40, 0.18);
+      }
+
+      html[data-theme="dark"] {
+        --bg: #0b1220;
+        --panel: rgba(255, 255, 255, 0.12);
+        --panel-strong: rgba(255, 255, 255, 0.2);
+        --cap-bg: rgba(255, 255, 255, 0.13);
+        --text: #eaf0ff;
+        --muted: #d9e1ff;
+        --accent: #7c5cff;
+        --accentRgb: 124 92 255;
+        --accent2: #2ee9a6;
+        --accent2Rgb: 46 233 166;
+        --border: rgba(255, 255, 255, 0.26);
+        --theme-btn-bg: rgba(255, 255, 255, 0.15);
+        --theme-btn-bg-hover: rgba(255, 255, 255, 0.2);
+        --grad1Alpha: 0.18;
+        --grad2Alpha: 0.12;
+        --cta-grad1-alpha: 0.35;
+        --cta-grad2-alpha: 0.18;
+        --cta-hover-border-color: rgba(255, 255, 255, 0.22);
       }
 
       html[data-theme="light"] {
-        --bg: var(--bg-light);
-        --text: var(--text-light);
-        --muted: var(--muted-light);
-
-        --panel: var(--panel-light);
-        --panel-strong: var(--panel-strong-light);
-        --cap-bg: var(--cap-bg-light);
-
-        --accent: var(--accent-light);
-        --accentRgb: var(--accentRgb-light);
-        --accent2: var(--accent2-light);
-        --accent2Rgb: var(--accent2Rgb-light);
-
-        --border: var(--border-light);
-        --theme-btn-bg: var(--theme-btn-bg-light);
-        --theme-btn-bg-hover: var(--theme-btn-bg-hover-light);
-
-        --grad1Alpha: var(--grad1Alpha-light);
-        --grad2Alpha: var(--grad2Alpha-light);
-
-        --cta-hover-border-color: var(--cta-hover-border-color-light);
+        --bg: #ffffff;
+        --panel: rgba(10, 20, 40, 0.07);
+        --panel-strong: rgba(10, 20, 40, 0.09);
+        --cap-bg: rgba(10, 20, 40, 0.06);
+        --text: #0b1220;
+        --muted: #24354f;
+        --accent: #5b5cff;
+        --accentRgb: 91 92 255;
+        --accent2: #18c58b;
+        --accent2Rgb: 24 197 139;
+        --border: rgba(10, 20, 40, 0.18);
+        --theme-btn-bg: rgba(10, 20, 40, 0.06);
+        --theme-btn-bg-hover: rgba(10, 20, 40, 0.1);
+        --grad1Alpha: 0.08;
+        --grad2Alpha: 0.06;
+        --cta-grad1-alpha: 0.35;
+        --cta-grad2-alpha: 0.18;
+        --cta-hover-border-color: rgba(10, 20, 40, 0.18);
       }
 
       * {
@@ -126,8 +123,8 @@
         border: 1px solid var(--border);
         background: linear-gradient(
           135deg,
-          rgba(var(--accentRgb), 0.35),
-          rgba(var(--accent2Rgb), 0.18)
+          rgba(var(--accentRgb), var(--cta-grad1-alpha)),
+          rgba(var(--accent2Rgb), var(--cta-grad2-alpha))
         );
         color: var(--text);
         padding: 10px 14px;
@@ -391,7 +388,7 @@
 
         function setMode(mode) {
           const isLight = mode === "light";
-          document.documentElement.dataset.theme = isLight ? "light" : "";
+          document.documentElement.dataset.theme = isLight ? "light" : "dark";
           btn.textContent = isLight ? "Тёмная" : "Светлая";
         }
 
