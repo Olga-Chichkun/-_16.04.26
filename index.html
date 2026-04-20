@@ -3,425 +3,302 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>GitHub.com: возможности и причины начать</title>
-    <script>
-      (function () {
-        const storageKey = "github_theme_mode";
-        const savedTheme = localStorage.getItem(storageKey);
-        const hasValidSavedTheme = savedTheme === "light" || savedTheme === "dark";
-        const prefersLight =
-          typeof window.matchMedia === "function" &&
-          window.matchMedia("(prefers-color-scheme: light)").matches;
-
-        const initialTheme = hasValidSavedTheme ? savedTheme : prefersLight ? "light" : "dark";
-        document.documentElement.dataset.theme = initialTheme;
-      })();
-    </script>
-    <style>
-      :root {
-        --bg: #0b1220;
-        --panel: rgba(255, 255, 255, 0.12);
-        --panel-strong: rgba(255, 255, 255, 0.2);
-        --cap-bg: rgba(255, 255, 255, 0.13);
-        --text: #eaf0ff;
-        --muted: #d9e1ff;
-        --accent: #7c5cff;
-        --accentRgb: 124 92 255;
-        --accent2: #2ee9a6;
-        --accent2Rgb: 46 233 166;
-        --border: rgba(255, 255, 255, 0.26);
-        --theme-btn-bg: rgba(255, 255, 255, 0.15);
-        --theme-btn-bg-hover: rgba(255, 255, 255, 0.2);
-        --grad1Alpha: 0.18;
-        --grad2Alpha: 0.12;
-        --cta-grad1-alpha: 0.35;
-        --cta-grad2-alpha: 0.18;
-        --cta-hover-border-color: rgba(255, 255, 255, 0.22);
-      }
-
-      html[data-theme="dark"] {
-        --bg: #0b1220;
-        --panel: rgba(255, 255, 255, 0.12);
-        --panel-strong: rgba(255, 255, 255, 0.2);
-        --cap-bg: rgba(255, 255, 255, 0.13);
-        --text: #eaf0ff;
-        --muted: #d9e1ff;
-        --accent: #7c5cff;
-        --accentRgb: 124 92 255;
-        --accent2: #2ee9a6;
-        --accent2Rgb: 46 233 166;
-        --border: rgba(255, 255, 255, 0.26);
-        --theme-btn-bg: rgba(255, 255, 255, 0.15);
-        --theme-btn-bg-hover: rgba(255, 255, 255, 0.2);
-        --grad1Alpha: 0.18;
-        --grad2Alpha: 0.12;
-        --cta-grad1-alpha: 0.35;
-        --cta-grad2-alpha: 0.18;
-        --cta-hover-border-color: rgba(255, 255, 255, 0.22);
-      }
-
-      html[data-theme="light"] {
-        --bg: #ffffff;
-        --panel: rgba(10, 20, 40, 0.07);
-        --panel-strong: rgba(10, 20, 40, 0.09);
-        --cap-bg: rgba(10, 20, 40, 0.06);
-        --text: #0b1220;
-        --muted: #24354f;
-        --accent: #5b5cff;
-        --accentRgb: 91 92 255;
-        --accent2: #18c58b;
-        --accent2Rgb: 24 197 139;
-        --border: rgba(10, 20, 40, 0.18);
-        --theme-btn-bg: rgba(10, 20, 40, 0.06);
-        --theme-btn-bg-hover: rgba(10, 20, 40, 0.1);
-        --grad1Alpha: 0.08;
-        --grad2Alpha: 0.06;
-        --cta-grad1-alpha: 0.35;
-        --cta-grad2-alpha: 0.18;
-        --cta-hover-border-color: rgba(10, 20, 40, 0.18);
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
-          "Noto Sans", "Liberation Sans", sans-serif;
-        background: radial-gradient(
-            1200px 600px at 20% -10%,
-            rgba(var(--accentRgb), var(--grad1Alpha)),
-            transparent
-          ),
-          radial-gradient(
-            900px 500px at 90% 10%,
-            rgba(var(--accent2Rgb), var(--grad2Alpha)),
-            transparent
-          ),
-          var(--bg);
-        color: var(--text);
-        transition: background 220ms ease, color 220ms ease;
-      }
-
-      .wrap {
-        max-width: 980px;
-        margin: 0 auto;
-        padding: 28px 16px 48px;
-      }
-
-      header {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 18px;
-      }
-
-      .title-block h1 {
-        margin: 0 0 8px;
-        font-size: clamp(1.35rem, 3vw, 2rem);
-        letter-spacing: -0.02em;
-      }
-
-      .title-block p {
-        margin: 0;
-        color: var(--muted);
-        line-height: 1.45;
-      }
-
-      .cta {
-        flex: 0 0 auto;
-        text-decoration: none;
-        border: 1px solid var(--border);
-        background: linear-gradient(
-          135deg,
-          rgba(var(--accentRgb), var(--cta-grad1-alpha)),
-          rgba(var(--accent2Rgb), var(--cta-grad2-alpha))
-        );
-        color: var(--text);
-        padding: 10px 14px;
-        border-radius: 12px;
-        font-weight: 650;
-      }
-
-      /* Верхний правый угол: кнопка смены темы + ссылка */
-      .right-controls {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 10px;
-        flex: 0 0 auto;
-      }
-
-      .theme-btn {
-        border: 1px solid var(--border);
-        background: var(--theme-btn-bg);
-        color: var(--text);
-        padding: 8px 12px;
-        border-radius: 12px;
-        font-weight: 650;
-        cursor: pointer;
-      }
-
-      .theme-btn:hover {
-        background: var(--theme-btn-bg-hover);
-        transform: translateY(-1px);
-      }
-
-      .cta:hover {
-        border-color: var(--cta-hover-border-color);
-        transform: translateY(-1px);
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 14px;
-        margin-top: 14px;
-      }
-
-      @media (min-width: 860px) {
-        .grid.two {
-          grid-template-columns: 1fr 1fr;
-        }
-        .grid.three {
-          grid-template-columns: 1fr 1fr 1fr;
-        }
-      }
-
-      .card {
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 16px;
-        transition: background 220ms ease, border-color 220ms ease;
-      }
-
-      .card h2 {
-        margin: 0 0 10px;
-        font-size: 1.05rem;
-      }
-
-      .card p {
-        margin: 0 0 10px;
-        color: var(--muted);
-        line-height: 1.5;
-      }
-
-      ol {
-        margin: 0;
-        padding-left: 20px;
-      }
-
-      li {
-        margin: 8px 0;
-        color: var(--text);
-      }
-
-      .pill {
-        display: inline-block;
-        padding: 6px 10px;
-        border-radius: 999px;
-        border: 1px solid var(--border);
-        background: var(--panel-strong);
-        color: var(--muted);
-        font-weight: 600;
-        font-size: 0.9rem;
-      }
-
-      .caps {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      @media (min-width: 560px) {
-        .caps {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-
-      .cap {
-        padding: 12px;
-        border-radius: 14px;
-        border: 1px solid var(--border);
-        background: var(--cap-bg);
-        transition: background 220ms ease, border-color 220ms ease;
-      }
-
-      .cap strong {
-        display: block;
-        margin-bottom: 4px;
-      }
-
-      .cap span {
-        color: var(--muted);
-        line-height: 1.35;
-      }
-
-      footer {
-        margin-top: 18px;
-        color: var(--muted);
-        font-size: 0.95rem;
-        line-height: 1.45;
-      }
-
-      a {
-        color: inherit;
-      }
-    </style>
+    <title>Промпт-инженер и AI-практик</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="wrap">
-      <header>
-        <div class="title-block">
-          <h1>GitHub.com: 5 причин начать учить сегодня</h1>
-          <p>
-            GitHub.com — это платформа для хостинга репозиториев, командной разработки и
-            автоматизации процессов. Ниже — понятная шпаргалка: причины, преимущества и
-            10 ключевых возможностей.
-          </p>
-        </div>
-        <div class="right-controls">
-          <button id="themeToggle" class="theme-btn" type="button" aria-label="Сменить цветовую схему">
-            Светлая
-          </button>
-          <a class="cta" href="https://github.com/" target="_blank" rel="noreferrer noopener">
-            Перейти на GitHub
-          </a>
-        </div>
-      </header>
+    <header class="hero" id="top">
+      <div class="container">
+        <p class="eyebrow">GPT-агенты под бизнес + обучение нейросетям</p>
+        <h1>Внедряю AI в процессы так, чтобы он экономил часы, а не создавал хаос</h1>
+        <p class="hero-subtitle">
+          Помогаю бизнесу убрать рутину через GPT-агентов, а специалистам - начать зарабатывать
+          с AI без технической боли. Сначала разбираем задачу, потом даю конкретное решение и
+          план внедрения.
+        </p>
 
-      <section class="grid two" aria-label="Причины и преимущества">
-        <article class="card">
-          <h2>5 причин начать учить GitHub сегодня</h2>
-          <ol>
-            <li>
-              Учишься работать в команде: коммиты, обсуждения и согласование изменений в
-              едином процессе.
-            </li>
-            <li>
-              Быстро оформляешь “портфолио”: публичные репозитории и аккуратные Pull Request
-              показывают твой уровень.
-            </li>
-            <li>
-              Осваиваешь контроль версий на практике: проще возвращаться к прошлым версиям и
-              понимать историю изменений.
-            </li>
-            <li>
-              Автоматизация через GitHub Actions: тесты, сборки, проверки качества и деплой
-              по расписанию или при PR.
-            </li>
-            <li>
-              Удобная работа с задачами: Issues и Projects помогают не терять контекст.
-            </li>
-          </ol>
-        </article>
+        <div class="hero-headlines">
+          <h2>Варианты сильных заголовков первого экрана:</h2>
+          <ul>
+            <li>Сотрудник, который работает 24/7 и не уходит в отпуск - это ваш GPT-агент.</li>
+            <li>AI в бизнесе без теории: только процессы, цифры и результат.</li>
+            <li>Перевожу нейросети из «интересно» в «приносит деньги».</li>
+            <li>Если AI не сработал, значит внедряли не в то место и не тем способом.</li>
+            <li>Из рутины в систему: автоматизируем то, что съедает ваш день.</li>
+            <li>Обучу работе с нейросетями под вашу профессию, а не по шаблонному курсу.</li>
+          </ul>
+        </div>
 
-        <article class="card">
-          <h2>3 преимущества GitHub.com</h2>
-          <p>
-            Если коротко, GitHub помогает одновременно писать код, согласовывать изменения и
-            поддерживать проект в рабочем состоянии.
-          </p>
-          <div class="grid three">
-            <div class="pill">Сообщество и шаблоны</div>
-            <div class="pill">Коллаборация</div>
-            <div class="pill">Автоматизация</div>
+        <div class="cta-row">
+          <a class="button button-primary" href="#contact">Разобрать задачу на консультации</a>
+          <a class="button button-secondary" href="#offers">Посмотреть форматы работы</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" id="logic">
+        <div class="container">
+          <h2>Логика страницы, которая ведет к заявке</h2>
+          <div class="grid grid-3">
+            <article class="card">
+              <h3>1. Проблема и потери</h3>
+              <p>Показываем, где прямо сейчас утекают время, деньги и возможности.</p>
+            </article>
+            <article class="card">
+              <h3>2. Решение под аудиторию</h3>
+              <p>Разделяем бизнес и специалистов, чтобы предложение попадало в запрос.</p>
+            </article>
+            <article class="card">
+              <h3>3. Доказательства и CTA</h3>
+              <p>Закрываем сомнения кейсами, форматом работы и конкретным шагом на старт.</p>
+            </article>
           </div>
-          <ol style="margin-top: 12px;">
-            <li>Много готовых практик и интеграций — быстро находишь “как правильно”.</li>
-            <li>Прозрачный код-ревью: легче обсуждать правки и снижать ошибки.</li>
-            <li>Гибкая автоматизация: от линтеров до CI/CD в один клик.</li>
-          </ol>
-        </article>
+        </div>
       </section>
 
-      <section class="grid" style="margin-top: 14px;" aria-label="10 возможностей GitHub.com">
-        <article class="card">
-          <h2>10 возможностей GitHub.com</h2>
-          <div class="caps">
-            <div class="cap">
-              <strong>Репозитории</strong>
-              <span>Хранилище кода с историей изменений и доступами.</span>
-            </div>
-            <div class="cap">
-              <strong>Коммиты и ветки</strong>
-              <span>Организация работы параллельно и безопасные изменения.</span>
-            </div>
-            <div class="cap">
-              <strong>Pull Requests</strong>
-              <span>Обсуждение и согласование изменений перед мерджем.</span>
-            </div>
-            <div class="cap">
-              <strong>Code Review</strong>
-              <span>Комментарий к строкам, подсказки и проверка качества.</span>
-            </div>
-            <div class="cap">
-              <strong>Issues</strong>
-              <span>Задачи, баги и трекинг работы команды.</span>
-            </div>
-            <div class="cap">
-              <strong>Actions (CI/CD)</strong>
-              <span>Автоматические тесты, сборки и деплой при событиях.</span>
-            </div>
-            <div class="cap">
-              <strong>GitHub Pages</strong>
-              <span>Публикация статических сайтов из репозитория.</span>
-            </div>
-            <div class="cap">
-              <strong>Projects</strong>
-              <span>Канбан-доски и планирование работ поверх Issues.</span>
-            </div>
-            <div class="cap">
-              <strong>Discussions</strong>
-              <span>Открытое обсуждение идей, вопросов и решений.</span>
-            </div>
-            <div class="cap">
-              <strong>Безопасность</strong>
-              <span>Подсказки по уязвимостям, зависимостям и правам.</span>
-            </div>
+      <section class="section section-alt" id="pain">
+        <div class="container">
+          <h2>Что вы теряете прямо сейчас</h2>
+          <div class="grid grid-2">
+            <article class="card">
+              <h3>Бизнес</h3>
+              <ul>
+                <li>Менеджеры тратят по 2-4 часа в день на повторяющиеся задачи.</li>
+                <li>Заявки теряются из-за ручной обработки и долгих ответов клиентам.</li>
+                <li>Команда перегружена операционкой вместо работы на рост выручки.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Частные специалисты</h3>
+              <ul>
+                <li>Тратите время на хаотичные промпты без стабильного результата.</li>
+                <li>Упускаете заказы, где уже требуют навыки работы с AI.</li>
+                <li>Покупаете курсы, но не внедряете знания в реальную работу.</li>
+              </ul>
+            </article>
           </div>
-        </article>
+        </div>
       </section>
 
-      <footer>
-        Хочешь — сделаю продолжение: “первый репозиторий за 15 минут” с пошаговой
-        инструкцией и мини-чеклистом (что сделать в браузере и через `git`).
-      </footer>
-    </div>
+      <section class="section" id="offers">
+        <div class="container">
+          <h2>Форматы работы</h2>
+          <div class="grid grid-2">
+            <article class="card">
+              <span class="tag">Для бизнеса</span>
+              <h3>GPT-агенты под конкретные процессы</h3>
+              <p>
+                Собираю AI-решение под ваши задачи: продажи, поддержка, контент, аналитика,
+                внутренние инструкции, обработка заявок.
+              </p>
+              <ul>
+                <li><strong>Короткий текст:</strong> Автоматизируем рутину и ускоряем команду.</li>
+                <li>
+                  <strong>Усиленный текст:</strong> Убираем узкие места в процессе и внедряем
+                  GPT-агента, который берет на себя повторяющиеся операции с контролируемым
+                  качеством.
+                </li>
+              </ul>
+              <a class="link-arrow" href="#contact">Хочу GPT-агента для бизнеса</a>
+            </article>
 
-    <script>
-      (function () {
-        const btn = document.getElementById("themeToggle");
-        if (!btn) return;
+            <article class="card">
+              <span class="tag">Для специалистов</span>
+              <h3>Индивидуальное обучение работе с нейросетями</h3>
+              <p>
+                Обучаю на ваших реальных задачах: как писать рабочие промпты, собирать связки
+                инструментов и монетизировать навык.
+              </p>
+              <ul>
+                <li><strong>Короткий текст:</strong> Разберетесь в AI и начнете применять в работе.</li>
+                <li>
+                  <strong>Усиленный текст:</strong> За несколько практических сессий выстроим
+                  персональную AI-систему под вашу профессию, чтобы экономить время и брать
+                  задачи дороже.
+                </li>
+              </ul>
+              <a class="link-arrow" href="#contact">Хочу обучение под себя</a>
+            </article>
+          </div>
+        </div>
+      </section>
 
-        const storageKey = "github_theme_mode";
-        const THEMES = {
-          LIGHT: "light",
-          DARK: "dark",
-        };
+      <section class="section section-alt" id="why-fails">
+        <div class="container">
+          <h2>Почему AI у многих не работает</h2>
+          <div class="grid grid-2">
+            <article class="card">
+              <h3>Типичные ошибки</h3>
+              <ul>
+                <li>Внедряют AI «потому что модно», а не под конкретный процесс.</li>
+                <li>Пытаются заменить людей полностью, вместо усиления команды.</li>
+                <li>Не считают метрики: сколько времени и денег должно экономиться.</li>
+                <li>Ограничиваются разовыми тестами без регламента и доработки.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Почему здесь работает</h3>
+              <ul>
+                <li>Начинаем с диагностики: где самая дорогая потеря ресурса.</li>
+                <li>Делаем MVP-решение, проверяем на реальных задачах, донастраиваем.</li>
+                <li>Фиксируем правила работы и обучаем команду пользоваться системой.</li>
+                <li>Оставляем понятный план масштабирования после внедрения.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
 
-        function setMode(mode) {
-          const nextMode = mode === THEMES.LIGHT ? THEMES.LIGHT : THEMES.DARK;
-          const isLight = nextMode === THEMES.LIGHT;
+      <section class="section" id="results">
+        <div class="container">
+          <h2>Результаты: было → стало</h2>
+          <div class="grid grid-3">
+            <article class="card">
+              <h3>Отдел продаж</h3>
+              <p><strong>Было:</strong> ответы клиентам занимали 15-40 минут.</p>
+              <p><strong>Стало:</strong> GPT-ассистент готовит черновик за 2-3 минуты.</p>
+            </article>
+            <article class="card">
+              <h3>Маркетинг</h3>
+              <p><strong>Было:</strong> контент-план собирали вручную несколько дней.</p>
+              <p><strong>Стало:</strong> стратегия и черновики формируются за 1 рабочую сессию.</p>
+            </article>
+            <article class="card">
+              <h3>Фриланс-специалист</h3>
+              <p><strong>Было:</strong> брал только простые задачи и демпинговал цену.</p>
+              <p><strong>Стало:</strong> продает AI-услуги как отдельный дорогой пакет.</p>
+            </article>
+          </div>
+        </div>
+      </section>
 
-          document.documentElement.dataset.theme = nextMode;
-          btn.textContent = isLight ? "Светлая тема" : "Тёмная тема";
-          localStorage.setItem(storageKey, nextMode);
-        }
+      <section class="section section-alt" id="trust">
+        <div class="container">
+          <h2>Доверие и экспертность</h2>
+          <div class="grid grid-2">
+            <article class="card">
+              <h3>Какие доказательства разместить</h3>
+              <ul>
+                <li>Кейсы с цифрами до/после: скорость, конверсия, себестоимость процесса.</li>
+                <li>Скриншоты рабочих сценариев и фрагменты регламентов внедрения.</li>
+                <li>Отзывы с указанием роли клиента и его задачи.</li>
+                <li>Короткое видео «как это работает вживую» на 2-3 минуты.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Если данных пока мало</h3>
+              <p>
+                Часть цифр и кейсов нужно заполнить конкретикой: ниша, точные метрики, средний
+                чек, длительность внедрения. Это усилит доверие и конверсию.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
 
-        const currentTheme = document.documentElement.dataset.theme;
-        setMode(currentTheme);
+      <section class="section" id="objections">
+        <div class="container">
+          <h2>Закрываем возражения</h2>
+          <div class="grid grid-2">
+            <article class="card">
+              <h3>«Дорого»</h3>
+              <p>Считаем стоимость бездействия: сколько теряете каждый месяц на ручной рутине.</p>
+            </article>
+            <article class="card">
+              <h3>«Не разберусь»</h3>
+              <p>Обучение и внедрение идут на ваших задачах, без перегруза теорией.</p>
+            </article>
+            <article class="card">
+              <h3>«Мне не подойдет»</h3>
+              <p>Начинаем с короткой диагностики и сразу определяем реалистичный сценарий.</p>
+            </article>
+            <article class="card">
+              <h3>«Уже пробовал»</h3>
+              <p>Разница в подходе: процесс + метрики + доработка, а не разовые эксперименты.</p>
+            </article>
+          </div>
+        </div>
+      </section>
 
-        btn.addEventListener("click", function () {
-          const currentlyLight = document.documentElement.dataset.theme === THEMES.LIGHT;
-          const next = currentlyLight ? THEMES.DARK : THEMES.LIGHT;
-          setMode(next);
-        });
-      })();
-    </script>
+      <section class="section section-alt" id="cta-flow">
+        <div class="container">
+          <h2>CTA и доведение до заявки</h2>
+          <div class="grid grid-3">
+            <article class="card">
+              <h3>Кнопки первого шага</h3>
+              <ul>
+                <li>Разобрать мой кейс</li>
+                <li>Получить план внедрения AI</li>
+                <li>Записаться на консультацию</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Микро-CTA по странице</h3>
+              <ul>
+                <li>Показать, как это будет в моей нише</li>
+                <li>Хочу пример GPT-агента</li>
+                <li>Получить дорожную карту на 30 дней</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Логика</h3>
+              <p>Каждый блок заканчивается следующей микроконверсией: интерес → доверие → заявка.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="mobile">
+        <div class="container">
+          <h2>Сжатый mobile-вариант оффера</h2>
+          <div class="card">
+            <p>
+              <strong>Коротко для мобильного:</strong> Настраиваю GPT-агентов для бизнеса и
+              обучаю работе с AI под вашу профессию. Без сложной теории, с понятным результатом
+              за первые недели.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="extras">
+        <div class="container">
+          <h2>Дополнительно для роста конверсии</h2>
+          <div class="grid grid-2">
+            <article class="card">
+              <h3>Идеи лид-магнитов</h3>
+              <ul>
+                <li>Чеклист «20 задач в бизнесе, которые выгодно отдать GPT-агенту».</li>
+                <li>Мини-гайд «7 промптов для специалистов, которые экономят 2 часа в день».</li>
+                <li>Диагностика в PDF: «Где вы теряете деньги без AI прямо сейчас».</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Если делать 2 отдельные страницы</h3>
+              <ul>
+                <li>Вариант 1: отдельный лендинг «GPT-агенты для бизнеса» + отдельный «Обучение AI».</li>
+                <li>Вариант 2: главная страница с сегментацией на входе и два глубоких подлендинга.</li>
+                <li>Усилители: тайм-слоты на консультацию, квиз по задаче, видеоразбор кейса.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" id="contact">
+      <div class="container footer-row">
+        <div>
+          <h2>Готовы внедрить AI в работу?</h2>
+          <p>
+            Оставьте заявку на консультацию: разберем вашу задачу, покажу быстрые точки роста и
+            честно скажу, где AI даст максимум результата.
+          </p>
+        </div>
+        <a class="button button-primary" href="#top">Оставить заявку</a>
+      </div>
+    </footer>
   </body>
 </html>
 
